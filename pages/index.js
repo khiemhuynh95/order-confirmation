@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { sendContactForm } from "../lib/api";
 
-const initValues = { name: "", email: "", subject: "Order Confirmation (#{order#})", message: "" };
+const initValues = { name: "", email: "", address: "", phone_number: ""};
 
 const initState = { isLoading: false, error: "", values: initValues };
 
@@ -98,14 +98,14 @@ export default function Home() {
       <FormControl
         mb={5}
         isRequired
-        isInvalid={touched.subject && !values.subject}
+        isInvalid={touched.address && !values.address}
       >
-        <FormLabel>Subject</FormLabel>
+        <FormLabel>Address</FormLabel>
         <Input
           type="text"
-          name="subject"
+          name="address"
           errorBorderColor="red.300"
-          value={values.subject}
+          value={values.address}
           onChange={handleChange}
           onBlur={onBlur}
         />
@@ -113,17 +113,16 @@ export default function Home() {
       </FormControl>
 
       <FormControl
-        isRequired
-        isInvalid={touched.message && !values.message}
         mb={5}
+        isRequired
+        isInvalid={touched.phone_number && !values.phone_number}
       >
-        <FormLabel>Message</FormLabel>
-        <Textarea
-          type="text"
-          name="message"
-          rows={4}
+        <FormLabel>Phone Number</FormLabel>
+        <Input
+          type="tel"
+          name="phone_number"
           errorBorderColor="red.300"
-          value={values.message}
+          value={values.phone_number}
           onChange={handleChange}
           onBlur={onBlur}
         />
@@ -135,7 +134,7 @@ export default function Home() {
         colorScheme="blue"
         isLoading={isLoading}
         disabled={
-          !values.name || !values.email || !values.subject || !values.message
+          !values.name || !values.email || !values.address || !values.phone_number
         }
         onClick={onSubmit}
       >

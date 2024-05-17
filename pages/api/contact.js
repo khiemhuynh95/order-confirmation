@@ -1,17 +1,14 @@
 import { transporter } from "../../config/nodemailer";
 import { orderTemplate } from "../../templates/html/order";
-import {generateOrderNumber, generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
-const fields = {
-  address: "1234 Naples Dr"
-}
+import {generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
 
 const generateHTML = (data) => {
   //data is passed from form and should replace fields
   return orderTemplate
       .replace(/{name}/g, data.name)
       .replace(/{email}/g, data.email)
-      
-      .replace(/{address}/g, fields.address)
+      .replace(/{phone#}/g, data.phone_number)
+      .replace(/{address}/g, data.address)
       .replace(/{ref#}/g, generateANumber(14))
       .replace(/{transaction#}/g, generateANumber(15))
       .replace(/{time}/g, getCurrentFormattedTime())
@@ -31,7 +28,7 @@ const generateEmailContent = (data) => {
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
-    if (!data || !data.name || !data.email || !data.subject || !data.message) {
+    if (!data || !data.name || !data.email || !data.address || !data.phone_number) {
       return res.status(400).send({ message: "Bad request" });
     }
     const mailOptions = {
@@ -42,7 +39,7 @@ const handler = async (req, res) => {
       await transporter.sendMail({
         ...mailOptions,
         ...generateEmailContent(data),
-        subject: data.subject.replace('{order#}', generateOrderNumber()),
+        subject: `Order Confirmation (#${generateANumber(6)})`
       });
 
       return res.status(200).json({ success: true });
