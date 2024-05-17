@@ -1,25 +1,24 @@
-import { mailOptions, transporter } from "../../config/nodemailer";
+import { transporter } from "../../config/nodemailer";
 import { orderTemplate } from "../../templates/html/order";
-const CONTACT_MESSAGE_FIELDS = {
-  name: "Name",
-  email: "Email",
-  subject: "Subject",
-  message: "Message",
-};
-
-
+import {generateOrderNumber, generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
 const fields = {
-  name: "Mon Nguyen",
-  email: "@gmail.com",
-  address: "2913 Naples Dr"
+  address: "1234 Naples Dr"
 }
 
 const generateHTML = (data) => {
   //data is passed from form and should replace fields
   return orderTemplate
-      .replace(/{name}/g, fields.name)
-      .replace(/{email}/g, fields.email)
-      .replace(/{address}/g, fields.address);
+      .replace(/{name}/g, data.name)
+      .replace(/{email}/g, data.email)
+      
+      .replace(/{address}/g, fields.address)
+      .replace(/{ref#}/g, generateANumber(14))
+      .replace(/{transaction#}/g, generateANumber(15))
+      .replace(/{time}/g, getCurrentFormattedTime())
+      .replace(/{cc#}/g, '2660')
+      .replace(/{dev#}/g, generateANumber(3))
+      .replace(/{shipping#}/g, generateANumber(6))
+      .replace(/{app_code}/g, generateApprovalCode());
 };
 
 const generateEmailContent = (data) => {
@@ -43,7 +42,7 @@ const handler = async (req, res) => {
       await transporter.sendMail({
         ...mailOptions,
         ...generateEmailContent(data),
-        subject: data.subject,
+        subject: data.subject.replace('{order#}', generateOrderNumber()),
       });
 
       return res.status(200).json({ success: true });

@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { sendContactForm } from "../lib/api";
 
-const initValues = { name: "", email: "", subject: "", message: "" };
+const initValues = { name: "", email: "", subject: "Order Confirmation (#{order#})", message: "" };
 
 const initState = { isLoading: false, error: "", values: initValues };
 
