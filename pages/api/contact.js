@@ -3,7 +3,6 @@ import { orderTemplate } from "../../templates/html/order";
 import {generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
 
 const generateHTML = (data) => {
-  //data is passed from form and should replace fields
   return orderTemplate
       .replace(/{name}/g, data.name)
       .replace(/{email}/g, data.email)
@@ -18,27 +17,17 @@ const generateHTML = (data) => {
       .replace(/{app_code}/g, generateApprovalCode());
 };
 
-const generateEmailContent = (data) => {
-  return {
-    text: '',
-    html: generateHTML(data)
-  };
-};
-
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
     if (!data || !data.name || !data.email || !data.address || !data.phone_number) {
       return res.status(400).send({ message: "Bad request" });
     }
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: data.email
-    };
     try {
       await transporter.sendMail({
-        ...mailOptions,
-        ...generateEmailContent(data),
+        from: process.env.EMAIL,
+        to: data.email,
+        html: generateHTML(data),
         subject: `Order Confirmation (#${generateANumber(6)})`
       });
 
