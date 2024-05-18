@@ -219,7 +219,7 @@ export function Email(props) {
                   </table>
                   
                   <Section style={greenSep}/>
-                  <p>For questions, comments, or Order status, send email to <a href="mailto:bxj210016@utdallas.edu" style={footer} target="_blank">bxj210016@utdallas.edu</a> and refer to Order 972183. Visit us <a href="https://ezpay.utdallas.edu:443/C20239_ustores/web/index.jsp" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://ezpay.utdallas.edu:443/C20239_ustores/web/index.jsp&amp;source=gmail&amp;ust=1716000206294000&amp;usg=AOvVaw1bNvXqhkGIiZbu1Awdvss0">online</a>.</p>
+                  <p>For questions, comments, or Order status, send email to <a href="mailto:bxj210016@utdallas.edu" style={footer} target="_blank">bxj210016@utdallas.edu</a> and refer to Order {order}. Visit us <a href="https://ezpay.utdallas.edu:443/C20239_ustores/web/index.jsp" target="_blank" data-saferedirecturl="https://www.google.com/url?q=https://ezpay.utdallas.edu:443/C20239_ustores/web/index.jsp&amp;source=gmail&amp;ust=1716000206294000&amp;usg=AOvVaw1bNvXqhkGIiZbu1Awdvss0">online</a>.</p>
             </Container>
             
          
