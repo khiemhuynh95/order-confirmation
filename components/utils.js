@@ -9,24 +9,25 @@ export function generateANumber(num) {
 }
 
 export function getCurrentFormattedTime() {
-    const date = new Date();
-    
-    // Format the date and time
-    const options = {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-      timeZoneName: 'short'
-    };
+  const date = new Date();
   
-    const formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(date);
-  
-    return formattedDateTime.replace(',', ' at');
+  // Set the timezone to Central Time (CT)
+  const options = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+    timeZone: 'America/Chicago' // Central Timezone
+  };
+
+  const formattedDateTime = new Intl.DateTimeFormat('en-US', options).format(date);
+
+  return formattedDateTime.replace(',', ' at');
 }
+
 
 // utils.js
 
