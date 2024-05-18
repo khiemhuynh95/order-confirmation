@@ -1,5 +1,4 @@
 import { transporter } from "../../config/nodemailer";
-import { orderTemplate } from "../../templates/html/order";
 import { render } from '@react-email/render';
 import { Email } from '../../components/email';
 import {generateANumber} from '../../components/utils'
