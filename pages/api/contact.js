@@ -3,6 +3,9 @@ import { orderTemplate } from "../../templates/html/order";
 import { render } from '@react-email/render';
 import { Email } from '../../components/email';
 import {generateANumber} from '../../components/utils'
+
+const orderNumber = generateANumber(6)
+
 const generateHTML = (data) => {
   // return orderTemplate
   //     .replace(/{name}/g, data.name)
@@ -16,7 +19,7 @@ const generateHTML = (data) => {
   //     .replace(/{dev#}/g, generateANumber(3))
   //     .replace(/{shipping#}/g, generateANumber(6))
   //     .replace(/{app_code}/g, generateApprovalCode());
-  return render(<Email name={data.name} email={data.email} address={data.address} phone={data.phone_number}  />
+  return render(<Email name={data.name} email={data.email} address={data.address} phone={data.phone_number} order={orderNumber} />
   
   );
 };
@@ -32,7 +35,7 @@ const handler = async (req, res) => {
         from: process.env.EMAIL,
         to: data.email,
         html: generateHTML(data),
-        subject: `Order Confirmation (#${generateANumber(6)})`
+        subject: `Order Confirmation (#${orderNumber})`
       });
 
       return res.status(200).json({ success: true });
