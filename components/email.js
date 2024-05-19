@@ -167,8 +167,8 @@ export function Email(props) {
                      </tr>
 
                      <tr>
-                        <th style={{fontWeight: 'normal'}}>Primary Phone: +1: </th>
-                        <td style={{fontWeight: 'normal'}}>{phone}</td>
+                        <th style={{fontWeight: 'normal'}}>Primary Phone:</th>
+                        <td style={{fontWeight: 'normal'}}>+1 {phone}</td>
                      </tr>
                      <tr>
                         <th style={{fontWeight: 'normal'}}>Emergency Contact: </th>
