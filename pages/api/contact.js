@@ -18,7 +18,7 @@ const generateHTML = (data) => {
   //     .replace(/{dev#}/g, generateANumber(3))
   //     .replace(/{shipping#}/g, generateANumber(6))
   //     .replace(/{app_code}/g, generateApprovalCode());
-  return render(<Email name={data.name} email={data.email} address={data.address} phone={data.phone_number} order={orderNumber} />
+  return render(<Email name={data.name} email={data.email} address={data.address} phone={data.phone_number} order={orderNumber} cc={data.last_4_cc} />
   
   );
 };

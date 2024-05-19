@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import { sendContactForm } from "../lib/api";
 
-const initValues = { name: "", email: "", address: "", phone_number: ""};
+const initValues = { name: "", email: "", address: "", phone_number: "", last_4_cc: ""};
 
 const initState = { isLoading: false, error: "", values: initValues };
 
@@ -115,6 +115,28 @@ export default function Home() {
       <FormControl
         mb={5}
         isRequired
+        isInvalid={touched.last_4_cc && (!values.last_4_cc || !/^\d{4}$/.test(values.last_4_cc))}
+      >
+        <FormLabel>Last 4 CC</FormLabel>
+        <Input
+          type="text"
+          name="last_4_cc"
+          errorBorderColor="red.300"
+          value={values.last_4_cc}
+          onChange={handleChange}
+          onBlur={onBlur}
+          pattern="\d{4}"
+          maxLength="4"
+        />
+        <FormErrorMessage>
+          {touched.last_4_cc && (!values.last_4_cc ? 'Required' : 'Must be exactly 4 digits')}
+        </FormErrorMessage>
+      </FormControl>
+
+
+      <FormControl
+        mb={5}
+        isRequired
         isInvalid={touched.phone_number && !values.phone_number}
       >
         <FormLabel>Phone Number</FormLabel>
@@ -127,14 +149,14 @@ export default function Home() {
           onBlur={onBlur}
         />
         <FormErrorMessage>Required</FormErrorMessage>
-      </FormControl>
+      </FormControl> 
 
       <Button
         variant="outline"
         colorScheme="blue"
         isLoading={isLoading}
         disabled={
-          !values.name || !values.email || !values.address || !values.phone_number
+          !values.name || !values.email || !values.address || !values.phone_number || !values.last_4_cc
         }
         onClick={onSubmit}
       >

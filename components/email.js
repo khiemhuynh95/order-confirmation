@@ -3,7 +3,7 @@ import { Html, Head, Body, Text, Link, Img, Section, Container} from "@react-ema
 import {generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
 // import '../public/css/main.css'
 export function Email(props) {
-  const { name, address, email, phone, order} = props;
+  const { name, address, email, phone, order, cc} = props;
 
   return (
     <Html lang="en">
@@ -85,7 +85,7 @@ export function Email(props) {
                      </tr>
                      <tr>
                            <th style={{fontWeight: 'normal'}}>Credit Card Number:</th>
-                           <td style={{fontWeight: 'normal'}}>xxxxxxxxxxxx2660</td>
+                           <td style={{fontWeight: 'normal'}}>xxxxxxxxxxxx{cc}</td>
                      </tr>
                      <tr>
                            <th style={{fontWeight: 'normal'}}>Reference Number:</th>
