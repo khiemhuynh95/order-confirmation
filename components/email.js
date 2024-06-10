@@ -3,7 +3,16 @@ import { Html, Head, Body, Text, Link, Img, Section, Container} from "@react-ema
 import {generateANumber, getCurrentFormattedTime ,generateApprovalCode} from "./utils"
 // import '../public/css/main.css'
 export function Email(props) {
-  const { name, address, email, phone, order, cc} = props;
+  const { 
+      name, 
+      address, 
+      email,
+      city,
+      state,
+      zip, 
+      phone, 
+      order, 
+      cc} = props;
 
   return (
     <Html lang="en">
@@ -51,12 +60,12 @@ export function Email(props) {
                            <td style={{fontWeight: 'normal'}}>{address}</td>
                      </tr>
                      <tr>
-                           <th style={{fontWeight: 'normal'}}>Garland, TX</th>
-                           <td style={{fontWeight: 'normal'}}>Garland, TX</td>
+                           <th style={{fontWeight: 'normal'}}>{city}, {state}</th>
+                           <td style={{fontWeight: 'normal'}}>{city}, {state}</td>
                      </tr>
                      <tr>
-                           <th style={{fontWeight: 'normal'}}>75040-4655</th>
-                           <td style={{fontWeight: 'normal'}}>75040-4655</td>
+                           <th style={{fontWeight: 'normal'}}>{zip}-4655</th>
+                           <td style={{fontWeight: 'normal'}}>{zip}-4655</td>
                      </tr>
                      <tr>
                            <th style={{fontWeight: 'normal'}}>United States</th>
@@ -176,7 +185,7 @@ export function Email(props) {
                      </tr>
                      <tr>
                         <th style={{fontWeight: 'normal'}}>Address: </th>
-                        <td style={{fontWeight: 'normal'}}>{address} Garland TX</td>
+                        <td style={{fontWeight: 'normal'}}>{address} {city} {state}</td>
                      </tr>
                      <tr>
                            <th></th>

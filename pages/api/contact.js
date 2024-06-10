@@ -3,22 +3,17 @@ import { render } from '@react-email/render';
 import { Email } from '../../components/email';
 import {generateANumber} from '../../components/utils'
 
-const orderNumber = generateANumber(6)
-
 const generateHTML = (data) => {
-  // return orderTemplate
-  //     .replace(/{name}/g, data.name)
-  //     .replace(/{email}/g, data.email)
-  //     .replace(/{phone#}/g, data.phone_number)
-  //     .replace(/{address}/g, data.address)
-  //     .replace(/{ref#}/g, generateANumber(14))
-  //     .replace(/{transaction#}/g, generateANumber(15))
-  //     .replace(/{time}/g, getCurrentFormattedTime())
-  //     .replace(/{cc#}/g, '2660')
-  //     .replace(/{dev#}/g, generateANumber(3))
-  //     .replace(/{shipping#}/g, generateANumber(6))
-  //     .replace(/{app_code}/g, generateApprovalCode());
-  return render(<Email name={data.name} email={data.email} address={data.address} phone={data.phone_number} order={orderNumber} cc={data.last_4_cc} />
+  return render(<Email 
+      name={data.name} 
+      email={data.email} 
+      address={data.address}
+      city={data.city}
+      state={data.state} 
+      zip={data.zip}  
+      phone={data.phone_number} 
+      order={data.order_number} 
+      cc={data.last_4_cc} />
   
   );
 };
@@ -26,15 +21,24 @@ const generateHTML = (data) => {
 const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
-    if (!data || !data.name || !data.email || !data.address || !data.phone_number) {
+    if (
+        !data || 
+        !data.name || 
+        !data.email || 
+        !data.address || 
+        !data.city ||
+        !data.state ||
+        !data.zip ||
+        !data.phone_number) {
       return res.status(400).send({ message: "Bad request" });
     }
     try {
+      data.order_number = data.order_number || generateANumber(6);
       await transporter.sendMail({
         from: process.env.EMAIL,
         to: data.email,
         html: generateHTML(data),
-        subject: `Order Confirmation (#${orderNumber})`
+        subject: `Order Confirmation (#${data.order_number})`
       });
 
       return res.status(200).json({ success: true });
